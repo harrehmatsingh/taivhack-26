@@ -200,18 +200,27 @@ export class RouteOptimizer {
         parameters: routeIdx (an array of box indices in visiting order), 
                     dist (a precomputed distance matrix between every pair of boxes)
         return: void
-        summary: Applies a capped 2-opt pass to reduce path length by reversing segments.
+        summary: It performs a capped 2‑opt optimization on the current route, to shorten 
+                 a route by reversing segments if that will reduces total distance. 
+                 Since, the greedy route is fast but not always optimal, 2‑opt is a lightweight 
+                 improvement in order to remove any inefficiencies that are pretty obvious. 
         */
     private improveRoute2Opt(routeIdx: number[], dist: number[][]): void {
 
         const n = routeIdx.length;
+
+        // If the route has fewer than 4 points, 
+        // there’s no meaningful segment to reverse, so it returns immediately.
         if (n < 4) {
             return;
         }
 
+        // maxChecks cap prevents it from running too long on large inputs
         const maxChecks = Math.min(20000, n * n);
+
         let checks = 0;
         let improved = true;
+
         while (improved && checks < maxChecks) {
             improved = false;
             for (let i = 0; i < n - 2 && checks < maxChecks; i++) {
