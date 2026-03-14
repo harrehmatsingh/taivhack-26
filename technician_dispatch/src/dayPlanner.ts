@@ -199,7 +199,7 @@ export class DayPlanner {
     /*
     selectNextBoxId
     parameters: remaining, currentLocation, speedKmh, totalTime, workingMinutes
-    return: string | null
+    return: string or null
     summary: Picks the next feasible box with the lowest incremental time cost.
     */
     private selectNextBoxId(
@@ -243,12 +243,14 @@ export class DayPlanner {
         currentLocation: Location,
         speedKmh: number,
     ): { stepMinutes: number; newLocation: Location } {
+
         const chosen = remaining.get(chosenId)!;
         // Travel time plus fix time is the full cost for this step.
         const stepMinutes =
             this.travelTimeMinutes(currentLocation, chosen.location, speedKmh) +
             chosen.fixTimeMinutes;
         remaining.delete(chosenId);
+
         return { stepMinutes, newLocation: chosen.location };
     }
 }
