@@ -7,7 +7,7 @@ export interface User {
 }
 
 export class UserManager {
-    // mapping users (value) to id (key)
+    // mapping id (key) to users (value)
     private usersById: Map<string, User> = new Map();
 
     addUser(user: User): void {
@@ -28,15 +28,15 @@ export class UserManager {
     }
 
     getUser(id: string): User | null {
-      return this.usersById.get(id) ?? null;
+        return this.usersById.get(id) ?? null;
     }
 
     getUsersByEmail(email: string): User[] | null {
-      return this.getAllUsers().filter((user) => user.email === email);
+        return this.getAllUsers().filter((user) => user.email === email);
     }
 
     getUsersByPhone(phone: string): User[] | null {
-      return this.getAllUsers().filter((user) => user.phone === phone);
+        return this.getAllUsers().filter((user) => user.phone === phone);
     }
 
     getAllUsers(): User[] {
