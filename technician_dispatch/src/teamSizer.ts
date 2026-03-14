@@ -52,7 +52,7 @@ export class TeamSizer {
     haversineDistance(loc1: Location, loc2: Location): number {
         const R = 6371;
         const toRad = (deg: number) => (deg * Math.PI) / 180;
-        const dLat = toRad(loc2.latitude  - loc1.latitude);
+        const dLat = toRad(loc2.latitude - loc1.latitude);
         const dLng = toRad(loc2.longitude - loc1.longitude);
         const lat1 = toRad(loc1.latitude);
         const lat2 = toRad(loc2.latitude);
@@ -141,7 +141,7 @@ export class TeamSizer {
                 return null;
             }
 
-            // Commit the box to the chosen technician.
+            // Commit the box to the chosen technician
             assignments[choice.index].assignedBoxIds.push(box.id);
             techState[choice.index].totalTime += choice.addedMinutes;
             techState[choice.index].currentLocation = box.location;
@@ -169,7 +169,6 @@ export class TeamSizer {
             const aloneTime =
                 this.travelTimeMinutes(startLocation, box.location, speedKmh) +
                 box.fixTimeMinutes;
-            // One box already exceeds the deadline → impossible for any team size.
             if (aloneTime > deadlineMinutes) {
                 return {
                     techniciansNeeded: 0,
@@ -199,8 +198,6 @@ export class TeamSizer {
 
     /*
     createEmptyAssignments
-    parameters: numTechnicians
-    return: TechnicianAssignment[]
     summary: Creates N empty technician assignments with labels.
     */
     private createEmptyAssignments(numTechnicians: number): TechnicianAssignment[] {
@@ -216,8 +213,6 @@ export class TeamSizer {
 
     /*
     allBoxesIndividuallyFeasible
-    parameters: startLocation, speedKmh, boxes, deadlineMinutes
-    return: boolean
     summary: Ensures every box can be completed alone within the deadline.
     */
     private allBoxesIndividuallyFeasible(
@@ -239,9 +234,7 @@ export class TeamSizer {
 
     /*
     orderBoxesBySoloCost
-    parameters: startLocation, speedKmh, boxes
-    return: Box[]
-    summary: Sorts boxes so heavier (slower) ones get assigned first.
+    summary: Sorts boxes so heavier (or slower) ones get assigned first.
     */
     private orderBoxesBySoloCost(
         startLocation: Location,
@@ -262,8 +255,6 @@ export class TeamSizer {
 
     /*
     createTechnicianState
-    parameters: numTechnicians, startLocation
-    return: { currentLocation: Location; totalTime: number }[]
     summary: Initializes each technician at the shared start with zero time.
     */
     private createTechnicianState(
@@ -278,8 +269,6 @@ export class TeamSizer {
 
     /*
     chooseBestTechnician
-    parameters: techState, box, speedKmh, deadlineMinutes
-    return: { index: number; addedMinutes: number } | null
     summary: Picks the technician that can take the box with the smallest new total time.
     */
     private chooseBestTechnician(
