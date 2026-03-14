@@ -14,3 +14,5 @@ If you have any design documents or business documents, please point to them her
 ## Installation Instructions
 
 If you are creating a web app and have running instructions, please put them here. We recommend creating a web app through `npm create vite@latest` so that we can easily run it by running npm start.
+
+npm install then npm start
