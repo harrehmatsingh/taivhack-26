@@ -197,7 +197,8 @@ export class RouteOptimizer {
 
     /*
         improveRoute2Opt
-        parameters: routeIdx, dist
+        parameters: routeIdx (an array of box indices in visiting order), 
+                    dist (a precomputed distance matrix between every pair of boxes)
         return: void
         summary: Applies a capped 2-opt pass to reduce path length by reversing segments.
         */
