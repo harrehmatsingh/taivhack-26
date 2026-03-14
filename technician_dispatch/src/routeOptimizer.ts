@@ -210,7 +210,7 @@ export class RouteOptimizer {
         const n = routeIdx.length;
 
         // If the route has fewer than 4 points, 
-        // there’s no meaningful segment to reverse, so it returns immediately.
+        // there’s no meaningful segment to reverse, so return immediately.
         if (n < 4) {
             return;
         }
@@ -221,19 +221,25 @@ export class RouteOptimizer {
         let checks = 0;
         let improved = true;
 
+        // loop till no further improvement or # of checks reached the cap
         while (improved && checks < maxChecks) {
             improved = false;
             for (let i = 0; i < n - 2 && checks < maxChecks; i++) {
                 for (let k = i + 1; k < n - 1 && checks < maxChecks; k++) {
                     checks++;
+
+                    // edge 1: a->b
                     const a = routeIdx[i];
                     const b = routeIdx[i + 1];
+
+                    // edge 2: c->d
                     const c = routeIdx[k];
                     const d = routeIdx[k + 1];
 
                     const currentDist = dist[a][b] + dist[c][d];
                     const swappedDist = dist[a][c] + dist[b][d];
 
+                    // If swapped is shorter, reverse the segment
                     if (swappedDist + 1e-9 < currentDist) {
                         for (let left = i + 1, right = k; left < right; left++, right--) {
                             const tmp = routeIdx[left];
