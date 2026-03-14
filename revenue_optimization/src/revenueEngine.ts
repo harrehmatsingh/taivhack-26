@@ -71,8 +71,15 @@ export class RevenueEngine {
             rawRevenue: number;
         }> = [];
 
+        let targetAreaMultiplier = 1;
+
         for (const areaId in schedule) {
             for (const sa of schedule[areaId]) {
+                if (sa.adId === ad.adId) {
+                    const area = areaMap.get(sa.areaId);
+                    if (area) targetAreaMultiplier = area.multiplier;
+                }
+
                 const scheduledAd = adMap.get(sa.adId);
                 if (scheduledAd && scheduledAd.advertiserId === ad.advertiserId) {
                     const area = areaMap.get(sa.areaId);
@@ -119,7 +126,8 @@ export class RevenueEngine {
         }
 
         const decayMultiplier = position >= 0 ? Math.pow(decayRate, position) : 1;
-        return ad.baseRevenue * areaMultiplier * decayMultiplier;
+
+        return ad.baseRevenue * targetAreaMultiplier * decayMultiplier;
     }
 
     // Return the number of unique advertisers represented in the schedule.
@@ -153,11 +161,14 @@ export class RevenueEngine {
         const areaSchedule = fullSchedule[area.areaId];
         if (!areaSchedule || areaSchedule.length === 0) return 0;
 
-        // Sum up the revenue for each ad in this area.
-        // Each ad's revenue depends on its global decay position across the full schedule.
+        const adMap = new Map<string, Ad>();
+        for (const a of ads) {
+            adMap.set(a.adId, a);
+        }
+
         let totalRevenue = 0;
         for (const sa of areaSchedule) {
-            const ad = ads.find(a => a.adId === sa.adId);
+            const ad = adMap.get(sa.adId);
             if (!ad) continue;
             totalRevenue += this.calculatePlacementRevenue(ad, areasArray, ads, fullSchedule, decayRate);
         }
