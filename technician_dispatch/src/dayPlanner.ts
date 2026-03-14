@@ -175,8 +175,6 @@ export class DayPlanner {
 
     /*
     partitionBoxesByFeasibility
-    parameters: technician, boxes
-    return: { remaining: Map<string, Box>; skipped: Set<string> }
     summary: Splits boxes into those that could ever fit in the workday and those that cannot.
     */
     private partitionBoxesByFeasibility(
@@ -198,8 +196,6 @@ export class DayPlanner {
 
     /*
     selectNextBoxId
-    parameters: remaining, currentLocation, speedKmh, totalTime, workingMinutes
-    return: string or null
     summary: Picks the next feasible box with the lowest incremental time cost.
     */
     private selectNextBoxId(
@@ -233,8 +229,6 @@ export class DayPlanner {
 
     /*
     commitSelection
-    parameters: remaining, chosenId, currentLocation, speedKmh
-    return: { stepMinutes: number; newLocation: Location }
     summary: Applies the chosen box to the route and returns its time cost and new position.
     */
     private commitSelection(

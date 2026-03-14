@@ -122,8 +122,6 @@ export class RouteOptimizer {
 
     /*
         buildDistanceMatrix
-        parameters: boxes
-        return: number[][]
         summary: Pre-computes the symmetric pairwise haversine distances between all boxes.
         */
     private buildDistanceMatrix(boxes: Box[]): number[][] {
@@ -142,8 +140,6 @@ export class RouteOptimizer {
 
     /*
         buildStartDistances
-        parameters: start, boxes
-        return: number[]
         summary: Computes the distance from the technician start location to each box.
         */
     private buildStartDistances(start: Location, boxes: Box[]): number[] {
@@ -158,8 +154,6 @@ export class RouteOptimizer {
 
     /*
         buildGreedyRoute
-        parameters: ids, dist, startDist
-        return: number[]
         summary: Builds a nearest-neighbor route with deterministic tie-breaking by ID.
         */
     private buildGreedyRoute(
